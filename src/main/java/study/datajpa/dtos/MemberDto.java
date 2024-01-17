@@ -3,6 +3,8 @@ package study.datajpa.dtos;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import study.datajpa.entity.Member;
+import study.datajpa.entity.Team;
 
 @Getter
 @Setter
@@ -15,7 +17,7 @@ public class MemberDto {
     private String teamName;
 
     public MemberDto(Long id, String name, String teamName) {
-       this(id,name,0,teamName);
+        this(id, name, 0, teamName);
     }
 
     public MemberDto(Long id, String name, int age, String teamName) {
@@ -24,4 +26,21 @@ public class MemberDto {
         this.age = age;
         this.teamName = teamName;
     }
+
+    public MemberDto(Member member) {
+        this.id = member.getId();
+        this.name = member.getName();
+        this.age = member.getAge();
+        setTeamName(member.getTeam());
+    }
+
+    private void setTeamName(Team team) {
+        if (team != null) {
+            this.teamName = team.getName();
+            return;
+        }
+        this.teamName = null;
+    }
+
+
 }

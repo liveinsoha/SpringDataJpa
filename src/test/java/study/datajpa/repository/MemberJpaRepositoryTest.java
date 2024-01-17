@@ -24,6 +24,23 @@ class MemberJpaRepositoryTest {
     private TeamRepository teamRepository;
 
     @Test
+    void bulkAgePlusTest() {
+        Team teamA = teamRepository.save(new Team("teamA"));
+        Team teamB = teamRepository.save(new Team("teamB"));
+
+        Member cc = memberRepository.save(new Member("cc", 10, teamA, new Address("qqq", "www", "eee")));
+        Member aa = memberRepository.save(new Member("aa", 15, teamB, new Address("aaa", "sss", "ddd")));
+        Member bb = memberRepository.save(new Member("bb", 20, teamB, new Address("aaa", "sss", "ddd")));
+        Member ee = memberRepository.save(new Member("ee", 21, teamB, new Address("aaa", "sss", "ddd")));
+        Member dd = memberRepository.save(new Member("dd", 22, teamB, new Address("aaa", "sss", "ddd")));
+        int resultCount = memberRepository.bulkAgePlus(20);
+        assertThat(resultCount).isEqualTo(2);
+
+        Member dd1 = memberRepository.findByName("dd");
+        System.out.println("dd1 = " + dd1);
+    }
+
+    @Test
     void findByAgePageTest() {
         Team teamA = teamRepository.save(new Team("teamA"));
         Team teamB = teamRepository.save(new Team("teamB"));
